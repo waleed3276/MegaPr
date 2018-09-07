@@ -1,0 +1,483 @@
+﻿@model IEnumerable<MegaProject.Models.Store>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section Css {
+    <!-- DataTables -->
+    <link href="~/Content/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+
+}
+
+<!-- Start content -->
+<script>
+    // var App = angular.module("app", ["ng-file-model"]);
+    App.controller("StoreCtrl", function ($scope, $http, RequestService, Upload, $timeout) {
+        $scope.SelectedFiles = "";
+        $scope.UploadFiles = function (files) {
+           // console.log(files);
+            $scope.SelectedFiles = files;
+            if ($scope.SelectedFiles && $scope.SelectedFiles.length) {
+                Upload.upload({
+                    url: '/Stores/Upload/',
+                    data: {
+                        files: $scope.SelectedFiles
+                    }
+                }).then(function (response) {
+                    $timeout(function () {
+                        $scope.Result = response.data;
+                    });
+                }, function (response) {
+                    if (response.status > 0) {
+                        var errorMsg = response.status + ': ' + response.data;
+                        alert(errorMsg);
+                    }
+                });
+            }
+         
+        };
+
+
+            $scope.Grid = [];
+            $scope.StoreTypeList = [];
+            $scope.StoreList = [];
+            $scope.submittedFile = {};
+            $scope.obj = {};
+            $scope.StoreTypeObj = {
+                StoreId: 0, StoreTypes: "", StoreName: "", StoreEmail: "", StoreOwnerName: "", StoreNumber: "",
+                StoreOwnerNumber: "", StoreAddress: "", StoreLogo: "",
+                Status: false
+            };
+            $scope.SignupData = {};
+            $scope.SignupData.UserName = "";
+            $scope.SignupData.Email = "";
+            
+
+            var list = [];
+
+            function JsonCall(Controller, Action) {
+                $.ajax({
+                    type: "POST",
+                    traditional: true,
+                    async: false,
+                    cache: false,
+                    url: '/' + Controller + '/' + Action,
+                    context: document.body,
+                    success: function (json) {
+                        list= json;
+                    }
+               ,
+                    error: function (xhr) {
+                        //debugger;
+                    }
+                });
+            }
+            function JsonCallParam(Controller, Action, Parameters) {
+                $.ajax({
+                    type: "POST",
+                    traditional: true,
+                    async: false,
+                    cache: false,
+                    url: '/' + Controller + '/' + Action,
+                    context: document.body,
+                    data:Parameters,
+                    success: function (json) {
+                        list = json;
+                    }
+               ,
+                    error: function (xhr) {
+                        //debugger;
+                    }
+                });
+            }
+            function WebApiCall(Type, Action, Parameters) {
+
+                $.ajax({
+                    type: Type,
+                    traditional: true,
+                    async: false,
+                    cache: false,
+                    url: '/api/' + Action,
+                    context: document.body,
+                    data: Parameters,
+                    ContentType: 'application/json;utf-8',
+                    success: function (json) {
+                        list = json;
+                    }
+               ,
+                    error: function (xhr) {
+                        //debugger;
+                    }
+                });
+            }
+            function SaveProductImage(formData, StoreId) {
+                var res = '';
+                $http.post('/Stores/StoreImage', formData, {
+                    withCredentials: true,                      //Save ProductImage
+                    headers: { 'Content-Type': undefined },
+                    transformRequest: angular.identity
+                })
+                    .then(
+                    function (d) {
+                        res = d.data.filename;
+                        var ret = RequestService.JsonCallParam('Stores', 'AssignImagetoStore', { 'StoreId': StoreId, 'imageName': res });
+
+                    },
+                    function (e) {
+                    }
+                );
+            }
+
+
+            $scope.GetStore = function () {
+                JsonCall("Stores", "GetStore");
+                $scope.StoreList = list;
+
+            }
+            $scope.GetStore();
+
+
+            $scope.GetStoreType = function () {
+                JsonCall("StoreType", "GetStoreType");
+                $scope.StoreTypeList = list;
+
+            }
+            $scope.GetStoreType();
+
+            $scope.Save = function (obj) {
+
+           
+               // var ret = RequestService.JsonCallParam('Store', 'Insert', { 'Store': JSON.stringify($scope.StoreTypeObj) });
+
+                //alert(JSON.stringify(obj.StoreLogo.name));
+                console.log(obj);
+                //$scope.StoreTypeObj.StoreLogo = obj.StoreLogo.name;
+                //alert(JSON.stringify($scope.StoreTypeObj.StoreLogo));
+                
+                $scope.SignupData.UserName = $scope.StoreTypeObj.StoreOwnerName;
+                $scope.SignupData.Email = $scope.StoreTypeObj.StoreEmail;
+                var pram = {
+                    'Store': JSON.stringify($scope.StoreTypeObj),
+                    'RegisterViewModel': JSON.stringify($scope.SignupData)
+
+                };
+                if ($scope.StoreTypeObj.StoreId == 0) {
+                    if ($scope.SignupData.UserName != "") {
+
+                        JsonCallParam("Account", "Register2", pram);
+                        //var ret = JSON.parse(RequestService.JsonCallParam('Account', 'Register2', { 'RegisterViewModel': pram }));
+                        console.log(list)
+                        if (list != null || list != "") {
+                        }
+                    }
+                }
+                if ($scope.StoreTypeObj.StoreId == 0) {
+                    console.log($scope.StoreTypeObj);
+                  //  JsonCallParam("Store", "Insert", pram);
+                    var ret1 = RequestService.JsonCallParam('Stores', 'Insert', { 'Store': JSON.stringify($scope.StoreTypeObj) });
+                    if (!ret1.status && ret1 != '') {
+                        $scope.StoreTypeObj.StoreId = ret1;
+
+                        if ($scope.StoreTypeObj.StoreLogo != '') {
+                            alert($scope.StoreTypeObj.StoreLogo)
+                            var formData_pic1 = new FormData();
+                            formData_pic1.append('file', $scope.StoreTypeObj.StoreLogo);
+                            SaveProductImage(formData_pic1, $scope.StoreTypeObj.StoreId);
+                        }
+
+                    }
+
+                }
+                else {
+
+                    alert("test");
+                    JsonCallParam("StoreType", "Update_sales", pram);   
+                }
+
+                $scope.GetStore();
+                $scope.clear();
+            };
+
+            $scope.LoadData = function (obj) {
+
+                JsonCallParam("Stores", "Get_Data", { "StoreId": obj.StoreId });
+                $scope.StoreTypeObj = list;
+                $scope.StoreTypeObj.Status = true;    
+                console.log($scope.StoreTypeObj);
+             
+
+
+
+            };
+            $scope.clear = function () {
+                $scope.StoreTypeObj = {
+                    StoreId: 0, StoreTypes: "", StoreName: "", StoreOwnerName: "", StoreNumber: "",
+                    StoreOwnerNumber: "", StoreAddress: "", StoreLogo: "",
+                    Status: false
+                };
+
+
+            };
+
+        });
+</script>
+
+<div  ng-controller="StoreCtrl">
+    <div class="content">
+        <div class="container">
+
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Store Type</h4>
+                        <ol class="breadcrumb p-0 m-0">
+
+                            <li class="active">
+
+                            </li>
+                        </ol>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+            <div class="container card-box">
+                <div class="form-horizontal">
+
+                    <hr />
+                    <form name="form">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-1">Store Type</label>
+                            <div class="col-md-8" style="margin-left:3%">
+                                <select name="StoreTypes" ng-model="StoreTypeObj.StoreTypes" class="form-control" data-style="btn-default">
+                                    <option value="OnlineStore">Online Store</option>
+                                    <option value="IndividualStore">Individual Store</option>
+                                    @*<option ng-repeat="x in StoreTypeList" value="{{x.StoreTypes}}">{{x.StoreTitle}}</option>*@
+                                </select>
+                                <span style="color:red" ng-show="form.StoreTypes.$invalid &&form.StoreTypes.$dirty">
+                                    <span ng-show="form.StoreTypes.$error.required">Enter Store Type</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1">Store Name</label>
+                            <div class="col-md-8" style="margin-left:3%">
+                                <input type="text" class="form-control" name="StoreName" ng-model="StoreTypeObj.StoreName" placeholder="Enter Store Name " required />
+                                <span style="color:red" ng-show="form.StoreName.$invalid &&form.StoreName.$dirty">
+                                    <span ng-show="form.StoreName.$error.required">Enter Store Name</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1">Store Email</label>
+                            <div class="col-md-8" style="margin-left:3%">
+                                <input type="text" class="form-control" name="StoreEmail" ng-model="StoreTypeObj.StoreEmail" placeholder="Enter Store Email " required />
+                                <span style="color:red" ng-show="form.StoreEmail.$invalid &&form.StoreEmail.$dirty">
+                                    <span ng-show="form.StoreEmail.$error.required">Enter Store Email</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1">Store Owner Name</label>
+                            <div class="col-md-8" style="margin-left:3%">
+                                <input type="text" class="form-control" name="StoreOwnerName" ng-model="StoreTypeObj.StoreOwnerName" placeholder="Enter Store Owner Name " required />
+                                <span style="color:red" ng-show="form.StoreOwnerName.$invalid &&form.StoreOwnerName.$dirty">
+                                    <span ng-show="form.StoreOwnerName.$error.required">Enter Store Owner Name</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1">Store Number</label>
+                            <div class="col-md-8" style="margin-left:3%">
+                                <input type="text" class="form-control" name="StoreNumber" ng-model="StoreTypeObj.StoreNumber" placeholder="Enter Store Number " required />
+                                <span style="color:red" ng-show="form.StoreNumber.$invalid &&form.StoreMobileNo.$dirty">
+                                    <span ng-show="form.StoreNumber.$error.required">Enter Store Number</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1">Store Owner Number</label>
+                            <div class="col-md-8" style="margin-left:3%">
+                                <input type="text" class="form-control" name="StoreOwnerNumber" ng-model="StoreTypeObj.StoreOwnerNumber" placeholder="Store Owner Number" required />
+                                <span style="color:red" ng-show="form.StoreOwnerNumber.$invalid &&form.StoreLandline.$dirty">
+                                    <span ng-show="form.StoreOwnerNumber.$error.required">Enter Store Owner Number</span>
+                                </span>
+                            </div>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label class="control-label col-md-1">Store logo</label>
+                            <div class="col-md-8" style="margin-left:3%">
+                               
+                                <input type="file" class="form-control" name="StoreLogo" ngf-select="UploadFiles($files)"  placeholder="Select Store Logo " />
+                                <span style="color:red" ng-show="form.StoreLogo.$invalid &&form.StoreLogo.$dirty">
+                                    <span ng-show="form.StoreLogo.$error.required">Select Logo</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1">Store Address</label>
+                            <div class="col-md-8" style="margin-left:3%">
+                                <textarea class="form-control" name="StoreAddress" ng-model="StoreTypeObj.StoreAddress"  rows="5"></textarea>
+                                @*<input type="text" class="form-control"  placeholder="Enter Store Address " required />*@
+                                <span style="color:red" ng-show="form.StoreAddress.$invalid &&form.StoreAddress.$dirty">
+                                    <span ng-show="form.StoreAddress.$error.required">Enter Store Address</span>
+                                </span>
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label class="control-label col-md-1">Status</label>
+                            <div class="col-md-8" style="margin-left:3%">
+                                <select name="Status" ng-model="StoreTypeObj.Status" class="form-control" data-style="btn-default">
+                                    <option value="true">Active</option>
+                                    <option value="false">In-Active</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+
+
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-8">
+                                <div class="col-sm-6">
+                                    <input type="submit" name="Save" id="Save" value="Save" class="btn btn-lg btn-success" ng-click="Save(StoreTypeObj)" style="width:100%" />
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <input type="button" value="Clear" class="btn btn-lg btn-warning" style="width:100%" ng-click="Clear()" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br />
+            <div class="container card-box">
+                <div class="form-horizontal">
+                    <h4>Store </h4>
+                    <input type="button" class="btn btn-sm btn-default" value="Refresh" ng-click="GetStore()" />
+                    <hr />
+                    <table id="datatable-responsive" class="table table-striped  table-colored table-info">
+                        <thead>
+                            <tr>
+
+                                <th>Store Type</th>
+                               
+                                <th>Store Name </th>
+                                <th>Owner Name</th>
+                                <th>Image</th>
+                                <th>Number</th>
+                                <th>LandLine</th>
+                                <th>Address</th>
+                               
+
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in StoreList">
+
+                                <td>{{item.StoreTypes}}</td>
+                             
+                                <td>{{item.StoreName}}</td>
+                                <td>{{item.StoreOwnerName}}</td>
+                                <td><img height="70" width="70" ng-src="{{ServerPath+'/Content/Images/'+item.StoreLogo}}" alt=""></td>
+                                <td>{{item.StoreOwnerNumber}}</td>
+                                <td>{{item.StoreNumber}}</td>
+                                <td>{{item.StoreAddress}}</td>
+                            
+                                <td>{{item.Status}}</td>
+                                <td><input value="Edit" class="btn btn-sm btn-warning" type="button" ng-click="LoadData(item)" /></td>
+
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        
+
+
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/dataTables.bootstrap.js"></script>
+
+<script src="~/Content/assets/plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/buttons.bootstrap.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/jszip.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/pdfmake.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/vfs_fonts.js"></script>
+<script src="~/Content/assets/plugins/datatables/buttons.html5.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/buttons.print.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/dataTables.keyTable.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/dataTables.scroller.min.js"></script>
+<script src="~/Content/assets/plugins/datatables/dataTables.colVis.js"></script>
+<script src="~/Content/assets/plugins/datatables/dataTables.fixedColumns.min.js"></script>
+
+<!-- init -->
+<script src="~/Content/assets/pages/jquery.datatables.init.js"></script>
+<script type="text/javascript">
+            $(document).ready(function () {
+                $('#datatable').dataTable();
+                $('#datatable-keytable').DataTable({keys: true});
+                $('#datatable-responsive').DataTable();
+                $('#datatable-colvid').DataTable({
+                    "dom": 'C<"clear">lfrtip',
+                    "colVis": {
+                        "buttonText": "Change columns"
+                    }
+                });
+                $('#datatable-scroller').DataTable({
+                    ajax: "../plugins/datatables/json/scroller-demo.json",
+                    deferRender: true,
+                    scrollY: 380,
+                    scrollCollapse: true,
+                    scroller: true
+                });
+                var table = $('#datatable-fixed-header').DataTable({fixedHeader: true});
+                var table = $('#datatable-fixed-col').DataTable({
+                    scrollY: "300px",
+                    scrollX: true,
+                    scrollCollapse: true,
+                    paging: false,
+                    fixedColumns: {
+                        leftColumns: 1,
+                        rightColumns: 1
+                    }
+                });
+            });
+            TableManageButtons.init();
+
+</script>
+    
+    }

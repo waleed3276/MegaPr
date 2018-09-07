@@ -1,0 +1,1607 @@
+﻿@using MegaProject.Models
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutSite.cshtml";
+    ApplicationDbContext db = new ApplicationDbContext();
+}
+
+<!-- BANNER STRAT -->
+<section class="banner-main">
+    <div class="banner">
+        <div class="main-banner">
+            <div class="banner-1">
+                <img src="~/Content/Site/images/banner1.jpg" alt="Everypick">
+                <div class="banner-detail">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-7 col-8">
+                                <div class="banner-detail-inner">
+                                    <span class="slogan">New look</span>
+                                    <h1 class="banner-title">Smart Watches For  Men & Women</h1>
+                                    <p>The best smartwatch technology that helps you to connect between your work and life.</p>
+                                </div>
+                                <a class="btn btn-color" href="shop.html">Shop Now!</a>
+                            </div>
+                            <div class="col-xl-5 col-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+        </div>
+    </div>
+</section>
+<!-- BANNER END --> 
+
+ <!--  Featured Products Slider Block Start  -->
+<div class="featured-product pt-70">
+    <div class="container">
+        <div class="product-listing">
+            <div class="row">
+                <div class="col-12">
+                    <div class="heading-part line-bottom mb-30">
+                        <div id="tabs" class="category-bar">
+                            <ul class="tab-stap">
+                                <li><a class="tab-step1 selected" title="step1">Latest</a></li>
+                                <li><a class="tab-step2" title="step2">Featured</a></li>
+                                <li><a class="tab-step3" title="step3">Most Viewed</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pro_cat tab_content ">
+                <div id="items">
+                    <div class="">
+                        <ul>
+                            <li>
+                                <div id="data-step1" class="items-step1 product-slider-main position-r selected" data-temp="tabdata">
+                                    <div class="tab_cat">
+                                        <div class="row mlr_-20">
+                                            <div class="col-xl-4 col-lg-4 col-12 plr-20">
+                                                <div class="row mlr_-20">
+                                                    <div class="col-6 plr-20">
+                                           @foreach (var item in db.Stores.OrderBy(s=> s.StoreDate).Take(2))
+                                           {
+                                            <div class="product-item mb-30">
+                                                <div class="product-image">
+                                                    <a href="~/Stores/Detials?id=@item.Id">
+                                                        <img style="height:231px !important; width:178px !important" src="~/Content/images/@item.StoreLogo" height="231" width="178"  alt="@item.StoreName">
+                                                    </a>
+                                                    <div class="product-detail-inner">
+                                                        <div class="detail-inner-left align-center">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product-item-details">
+                                                    <div class="product-item-name"> <a href="~/Stores/Detials?id=@item.StoreId">@item.StoreName</a> </div>
+
+                                                </div>
+                                            </div>
+                                           }
+                                                   
+                                                      
+                                                    </div>
+                                                    <div class="col-6 plr-20">
+
+                                                        @foreach (var item2 in db.Stores.OrderBy(s => s.StoreDate).Skip(2).Take(2))
+                                                        {
+                                                            <div class="product-item mb-30">
+                                                                <div class="product-image">
+                                                                    <a href="product-page.html">
+                                                                        <img style="height:231px !important; width:178px !important" src="~/Content/images/@item2.StoreLogo" height="231" width="178" alt="@item2.StoreName">
+                                                                    </a>
+                                                                    <div class="product-detail-inner">
+                                                                        <div class="detail-inner-left align-center">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-item-details">
+                                                                    <div class="product-item-name"> <a href="~/Stores/Detials?id=@item2.StoreId">@item2.StoreName</a> </div>
+
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                   
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-12 plr-20 mb-sm-30">
+                                                <div class="row mlr_-20">
+                                                    <div class="col-12  plr-20">
+                                                        <div class="product-item align-center">
+                                                            <div class="main-label sale-label"><span>Sale</span></div>
+                                                            <div class="product-image">
+                                                                <a href="product-page.html"> <img src="~/Content/Site/images/7.jpg" alt="Everypick"> </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                            <div class="item-offer-clock">
+                                                                <ul class="countdown-clock">
+                                                                    <li>
+                                                                        <span class="days">00</span>
+                                                                        <p class="days_ref">days</p>
+                                                                    </li>
+                                                                    <li class="seperator">:</li>
+                                                                    <li>
+                                                                        <span class="hours">00</span>
+                                                                        <p class="hours_ref">hrs</p>
+                                                                    </li>
+                                                                    <li class="seperator">:</li>
+                                                                    <li>
+                                                                        <span class="minutes">00</span>
+                                                                        <p class="minutes_ref">min</p>
+                                                                    </li>
+                                                                    <li class="seperator">:</li>
+                                                                    <li>
+                                                                        <span class="seconds">00</span>
+                                                                        <p class="seconds_ref">sec</p>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-12 plr-20">
+                                                <div class="row mlr_-20">
+                                                    <div class="col-6 plr-20">
+                                                        @foreach (var item3 in db.Stores.OrderBy(s => s.StoreDate).Skip(4).Take(2))
+                                                        {
+                                                            <div class="product-item mb-30">
+                                                                <div class="product-image">
+                                                                    <a href="product-page.html">
+                                                                        <img style="height:231px !important; width:178px !important" src="~/Content/images/@item3.StoreLogo" height="231" width="178" alt="@item3.StoreName">
+                                                                    </a>
+                                                                    <div class="product-detail-inner">
+                                                                        <div class="detail-inner-left align-center">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-item-details">
+                                                                    <div class="product-item-name"> <a href="~/Stores/Detials?id=@item3.StoreId">@item3.StoreName</a> </div>
+
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                     
+                                                    </div>
+                                                    <div class="col-6 plr-20">
+                                                        @foreach (var item4 in db.Stores.OrderBy(s => s.StoreDate).Skip(6).Take(2))
+                                                        {
+                                                            <div class="product-item mb-30">
+                                                                <div class="product-image">
+                                                                    <a href="product-page.html">
+                                                                        <img style="height:231px !important; width:178px !important" src="~/Content/images/@item4.StoreLogo" height="231" width="178" alt="@item4.StoreName">
+                                                                    </a>
+                                                                    <div class="product-detail-inner">
+                                                                        <div class="detail-inner-left align-center">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="product-item-details">
+                                                                    <div class="product-item-name"> <a href="~/Stores/Detials?id=@item4.StoreId">@item4.StoreName</a> </div>
+
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                     
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div id="data-step2" class="items-step2 product-slider-main position-r" data-temp="tabdata">
+                                    <div class="tab_cat">
+                                        <div class="row mlr_-20">
+                                            <div class="col-xl-4 col-lg-4 col-12 plr-20">
+                                                <div class="row mlr_-20">
+                                                    <div class="col-6 plr-20">
+                                                        <div class="product-item mb-30">
+                                                            <div class="product-image">
+                                                                <a href="product-page.html">
+                                                                    <img src="~/Content/Site/images/2.jpg" alt="Everypick">
+                                                                </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-item mb-sm-30">
+                                                            <div class="product-image">
+                                                                <a href="product-page.html">
+                                                                    <img src="~/Content/Site/images/3.jpg" alt="Everypick">
+                                                                </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 plr-20">
+                                                        <div class="product-item sold-out mb-30">
+                                                            <div class="main-label sale-label"><span>Sale</span></div>
+                                                            <div class="product-image">
+                                                                <a href="product-page.html"> <img src="~/Content/Site/images/5.jpg" alt="Everypick"> </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-item mb-sm-30">
+                                                            <div class="main-label sale-label"><span>Sale</span></div>
+                                                            <div class="product-image">
+                                                                <a href="product-page.html"> <img src="~/Content/Site/images/2.jpg" alt="Everypick"> </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-12 plr-20 mb-sm-30">
+                                                <div class="row mlr_-20">
+                                                    <div class="col-12 plr-20">
+                                                        <div class="product-item align-center">
+                                                            <div class="main-label sale-label"><span>Sale</span></div>
+                                                            <div class="product-image">
+                                                                <a href="product-page.html"> <img src="~/Content/Site/images/6.jpg" alt="Everypick"> </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                            <div class="item-offer-clock">
+                                                                <ul class="countdown-clock">
+                                                                    <li>
+                                                                        <span class="days">00</span>
+                                                                        <p class="days_ref">days</p>
+                                                                    </li>
+                                                                    <li class="seperator">:</li>
+                                                                    <li>
+                                                                        <span class="hours">00</span>
+                                                                        <p class="hours_ref">hrs</p>
+                                                                    </li>
+                                                                    <li class="seperator">:</li>
+                                                                    <li>
+                                                                        <span class="minutes">00</span>
+                                                                        <p class="minutes_ref">min</p>
+                                                                    </li>
+                                                                    <li class="seperator">:</li>
+                                                                    <li>
+                                                                        <span class="seconds">00</span>
+                                                                        <p class="seconds_ref">sec</p>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-12 plr-20">
+                                                <div class="row mlr_-20">
+                                                    <div class="col-6 plr-20">
+                                                        <div class="product-item mb-30">
+                                                            <div class="product-image">
+                                                                <a href="product-page.html">
+                                                                    <img src="~/Content/Site/images/7.jpg" alt="Everypick">
+                                                                </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-item">
+                                                            <div class="product-image">
+                                                                <a href="product-page.html">
+                                                                    <img src="~/Content/Site/images/9.jpg" alt="Everypick">
+                                                                </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 plr-20">
+                                                        <div class="product-item sold-out mb-30">
+                                                            <div class="main-label sale-label"><span>Sale</span></div>
+                                                            <div class="product-image">
+                                                                <a href="product-page.html"> <img src="~/Content/Site/images/11.jpg" alt="Everypick"> </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-item">
+                                                            <div class="main-label sale-label"><span>Sale</span></div>
+                                                            <div class="product-image">
+                                                                <a href="product-page.html"> <img src="~/Content/Site/images/12.jpg" alt="Everypick"> </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div id="data-step3" class="items-step3 product-slider-main position-r" data-temp="tabdata">
+                                    <div class="tab_cat">
+                                        <div class="row mlr_-20">
+                                            <div class="col-xl-4 col-lg-4 col-12 plr-20">
+                                                <div class="row mlr_-20">
+                                                    <div class="col-6 plr-20">
+                                                        <div class="product-item mb-30">
+                                                            <div class="product-image">
+                                                                <a href="product-page.html">
+                                                                    <img src="~/Content/Site/images/5.jpg" alt="Everypick">
+                                                                </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-item mb-sm-30">
+                                                            <div class="product-image">
+                                                                <a href="product-page.html">
+                                                                    <img src="~/Content/Site/images/17.jpg" alt="Everypick">
+                                                                </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 plr-20">
+                                                        <div class="product-item sold-out mb-30">
+                                                            <div class="main-label sale-label"><span>Sale</span></div>
+                                                            <div class="product-image">
+                                                                <a href="product-page.html"> <img src="~/Content/Site/images/18.jpg" alt="Everypick"> </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-item mb-sm-30">
+                                                            <div class="main-label sale-label"><span>Sale</span></div>
+                                                            <div class="product-image">
+                                                                <a href="product-page.html"> <img src="~/Content/Site/images/10.jpg" alt="Everypick"> </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-12 plr-20 mb-sm-30">
+                                                <div class="row mlr_-20">
+                                                    <div class="col-12 plr-20">
+                                                        <div class="product-item align-center">
+                                                            <div class="main-label sale-label"><span>Sale</span></div>
+                                                            <div class="product-image">
+                                                                <a href="product-page.html"> <img src="~/Content/Site/images/16.jpg" alt="Everypick"> </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                            <div class="item-offer-clock">
+                                                                <ul class="countdown-clock">
+                                                                    <li>
+                                                                        <span class="days">00</span>
+                                                                        <p class="days_ref">days</p>
+                                                                    </li>
+                                                                    <li class="seperator">:</li>
+                                                                    <li>
+                                                                        <span class="hours">00</span>
+                                                                        <p class="hours_ref">hrs</p>
+                                                                    </li>
+                                                                    <li class="seperator">:</li>
+                                                                    <li>
+                                                                        <span class="minutes">00</span>
+                                                                        <p class="minutes_ref">min</p>
+                                                                    </li>
+                                                                    <li class="seperator">:</li>
+                                                                    <li>
+                                                                        <span class="seconds">00</span>
+                                                                        <p class="seconds_ref">sec</p>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-12 plr-20">
+                                                <div class="row mlr_-20">
+                                                    <div class="col-6 plr-20">
+                                                        <div class="product-item mb-30">
+                                                            <div class="product-image">
+                                                                <a href="product-page.html">
+                                                                    <img src="~/Content/Site/images/1.jpg" alt="Everypick">
+                                                                </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-item">
+                                                            <div class="product-image">
+                                                                <a href="product-page.html">
+                                                                    <img src="~/Content/Site/images/2.jpg" alt="Everypick">
+                                                                </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 plr-20">
+                                                        <div class="product-item sold-out mb-30">
+                                                            <div class="main-label sale-label"><span>Sale</span></div>
+                                                            <div class="product-image">
+                                                                <a href="product-page.html"> <img src="~/Content/Site/images/3.jpg" alt="Everypick"> </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-item">
+                                                            <div class="main-label sale-label"><span>Sale</span></div>
+                                                            <div class="product-image">
+                                                                <a href="product-page.html"> <img src="~/Content/Site/images/4.jpg" alt="Everypick"> </a>
+                                                                <div class="product-detail-inner">
+                                                                    <div class="detail-inner-left align-center">
+                                                                        <ul>
+                                                                            <li class="pro-cart-icon">
+                                                                                <form>
+                                                                                    <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                                                            <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                                            <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-item-details">
+                                                                <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                                                                <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  Featured Products Slider Block End  -->
+
+  <!-- Top Categories Start-->
+<section class="pt-70">
+    <div class="top-cate-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="heading-part line-bottom mb-30">
+                        <h2 class="main_title heading"><span>Top Categories</span></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="pro_cat">
+                <div class="row">
+                    <div id="top-cat-pro" class="owl-carousel sell-pro align-center">
+                        <div class="item ">
+                            <a href="shop.html">
+                                <div class="item-inner">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_1.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title"><span>men’s</span><br> shirts</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="shop.html">
+                                <div class="item-inner  mt-30">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_5.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title">shapewear</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="item ">
+                            <a href="shop.html">
+                                <div class="item-inner">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_2.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title"><span>Women’s</span><br>t-shirts</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="shop.html">
+                                <div class="item-inner  mt-30">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_6.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title"><span>Beauty and</span><br> make up</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="item ">
+                            <a href="shop.html">
+                                <div class="item-inner">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_3.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title"><span>men’spolo</span><br> t-shirts</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="shop.html">
+                                <div class="item-inner  mt-30">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_7.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title"><span>men’s</span><br> briefs</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="item ">
+                            <a href="shop.html">
+                                <div class="item-inner">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_4.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title">Leggings</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="shop.html">
+                                <div class="item-inner  mt-30">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_8.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title">jewellery</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="item ">
+                            <a href="shop.html">
+                                <div class="item-inner">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_9.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title">Lingerie</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="shop.html">
+                                <div class="item-inner  mt-30">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_10.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title">sunglasses</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="item ">
+                            <a href="shop.html">
+                                <div class="item-inner">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_11.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title"><span> Women’s </span><br>Watches</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="shop.html">
+                                <div class="item-inner  mt-30">
+                                    <div class="row m-0">
+                                        <div class="col-6 p-0">
+                                            <div class="cate-img">
+                                                <img src="~/Content/Site/images/cate_12.jpg" alt="Everypick">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-0">
+                                            <div class="cate-detail">
+                                                <div class="cate-title"><span>men’s </span><br>Watches</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Top Categories End-->
+
+<section class="pt-70">
+    <div class="special-product ptb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="heading-part line-bottom mb-30">
+                        <h2 class="main_title heading"><span>Special product</span></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-5 col-lg-4 d-none d-md-block">
+                    <div class="special-img">
+                        <a href="#">
+                            <img src="~/Content/Site/images/special-pro.png" alt="Everypick">
+                        </a>
+                    </div>
+                    <div class="special-info">
+                        <div class="special-poin special-info-1 align-left vertical-align-top">
+                            <div class="detail-inner">
+                                <h4>special</h4>
+                                <p>Lorem ipsum dolor eros consectetuer adipiscing. Donec eros</p>
+                            </div>
+                        </div>
+                        <div class="special-poin special-info-2  align-top">
+                            <div class="detail-inner">
+                                <h4>special</h4>
+                                <p>Lorem ipsum dolor eros consectetuer adipiscing. Donec eros</p>
+                            </div>
+                        </div>
+                        <div class="special-poin special-info-3 align-right vertical-align-left">
+                            <div class="detail-inner">
+                                <h4>special</h4>
+                                <p>Lorem ipsum dolor eros consectetuer adipiscing. Donec eros</p>
+                            </div>
+                        </div>
+                        <div class="special-poin special-info-4 align-bottom vertical-align-right">
+                            <div class="detail-inner">
+                                <h4>special</h4>
+                                <p>Lorem ipsum dolor eros consectetuer adipiscing. Donec eros</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-8">
+                    <div class="best-seller">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="item plr-20">
+                                    <div class="cat-box">
+                                        <div class="cat-box-inner">
+                                            <ul>
+                                                <li>
+                                                    <div class="pro-media">
+                                                        <a href="product-page.html"><img src="~/Content/Site/images/1.jpg" alt="Shopzone"></a>
+                                                    </div>
+                                                    <div class="pro-detail-info">
+                                                        <div class="rating-summary-block">
+                                                            <div title="53%" class="rating-result">
+                                                                <span style="width:53%"></span>
+                                                            </div>
+                                                        </div>
+                                                        <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                                        <div class="price-box">
+                                                            <span class="price">$80.00</span>
+                                                        </div>
+                                                        <div class="cart-link">
+                                                            <form>
+                                                                <button title="Add to Cart"><span><i class="fa fa-shopping-basket"></i></span>Add To Cart</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="pro-media">
+                                                        <a href="product-page.html"><img src="~/Content/Site/images/2.jpg" alt="Shopzone"></a>
+                                                    </div>
+                                                    <div class="pro-detail-info">
+                                                        <div class="rating-summary-block">
+                                                            <div title="53%" class="rating-result">
+                                                                <span style="width:53%"></span>
+                                                            </div>
+                                                        </div>
+                                                        <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                                        <div class="price-box">
+                                                            <span class="price">$80.00</span>
+                                                        </div>
+                                                        <div class="cart-link">
+                                                            <form>
+                                                                <button title="Add to Cart"><span><i class="fa fa-shopping-basket"></i></span>Add To Cart</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="item plr-20">
+                                    <div class="cat-box">
+                                        <div class="cat-box-inner">
+                                            <ul>
+                                                <li>
+                                                    <div class="pro-media">
+                                                        <a href="product-page.html"><img src="~/Content/Site/images/3.jpg" alt="Shopzone"></a>
+                                                    </div>
+                                                    <div class="pro-detail-info">
+                                                        <div class="rating-summary-block">
+                                                            <div title="53%" class="rating-result">
+                                                                <span style="width:53%"></span>
+                                                            </div>
+                                                        </div>
+                                                        <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                                        <div class="price-box">
+                                                            <span class="price">$80.00</span>
+                                                        </div>
+                                                        <div class="cart-link">
+                                                            <form>
+                                                                <button title="Add to Cart"><span><i class="fa fa-shopping-basket"></i></span>Add To Cart</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="pro-media">
+                                                        <a href="product-page.html"><img src="~/Content/Site/images/4.jpg" alt="Shopzone"></a>
+                                                    </div>
+                                                    <div class="pro-detail-info">
+                                                        <div class="rating-summary-block">
+                                                            <div title="53%" class="rating-result">
+                                                                <span style="width:53%"></span>
+                                                            </div>
+                                                        </div>
+                                                        <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                                        <div class="price-box">
+                                                            <span class="price">$80.00</span>
+                                                        </div>
+                                                        <div class="cart-link">
+                                                            <form>
+                                                                <button title="Add to Cart"><span><i class="fa fa-shopping-basket"></i></span>Add To Cart</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="item plr-20">
+                          <div class="cat-box">
+                            <div class="cat-box-inner">
+                              <ul>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/5.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/6.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="item plr-20">
+                          <div class="cat-box">
+                            <div class="cat-box-inner">
+                              <ul>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/7.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/8.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="item plr-20">
+                          <div class="cat-box">
+                            <div class="cat-box-inner">
+                              <ul>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/9.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/10.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="item plr-20">
+                          <div class="cat-box">
+                            <div class="cat-box-inner">
+                              <ul>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/11.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/12.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="item plr-20">
+                          <div class="cat-box">
+                            <div class="cat-box-inner">
+                              <ul>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/13.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/14.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="item plr-20">
+                          <div class="cat-box">
+                            <div class="cat-box-inner">
+                              <ul>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/15.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="pro-media">
+                                    <a href="product-page.html"><img src="~/Content/Site/images/16.jpg" alt="Shopzone"></a>
+                                  </div>
+                                  <div class="pro-detail-info">
+                                    <div class="rating-summary-block">
+                                      <div title="53%" class="rating-result">
+                                        <span style="width:53%"></span>
+                                      </div>
+                                    </div>
+                                    <a href="product-page.html">Cross Colours Camo Print Tank</a>
+                                    <div class="price-box">
+                                      <span class="price">$80.00</span>
+                                    </div>
+                                    <div class="cart-link">
+                                      <form>
+                                        <button title="Add to Cart"><span></span>Add To Cart</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div> -->
+                    </div>
+                    <!-- <div class="product-6">
+                      <div class="row">
+                        <div class="col-lg-4 col-6 pro-padding">
+                          <div class="product-item">
+                            <div class="main-label new-label"><span>New</span></div>
+                            <div class="product-image"> <a href="product-page.html"> <img src="~/Content/Site/images/1.jpg" alt="Everypick"> </a>
+                              <div class="product-detail-inner">
+                                <div class="detail-inner-left align-center">
+                                  <ul>
+                                    <li class="pro-cart-icon">
+                                      <form>
+                                        <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                      </form>
+                                    </li>
+                                    <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                    <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                    <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="product-item-details">
+                              <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                              <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-6 pro-padding">
+                          <div class="product-item">
+                            <div class="product-image"> <a href="product-page.html"> <img src="~/Content/Site/images/10.jpg" alt="Everypick"> </a>
+                              <div class="product-detail-inner">
+                                <div class="detail-inner-left align-center">
+                                  <ul>
+                                    <li class="pro-cart-icon">
+                                      <form>
+                                        <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                      </form>
+                                    </li>
+                                    <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                    <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                    <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="product-item-details">
+                              <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                              <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-6 mt-sm-30 pro-padding">
+                          <div class="product-item">
+                            <div class="main-label new-label"><span>New</span></div>
+                            <div class="product-image"> <a href="product-page.html"> <img src="~/Content/Site/images/11.jpg" alt="Everypick"> </a>
+                              <div class="product-detail-inner">
+                                <div class="detail-inner-left align-center">
+                                  <ul>
+                                    <li class="pro-cart-icon">
+                                      <form>
+                                        <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                      </form>
+                                    </li>
+                                    <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                    <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                    <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="product-item-details">
+                              <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                              <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-6 mt-30 pro-padding">
+                          <div class="product-item">
+                              <div class="main-label sale-label"><span>Sale</span></div>
+                            <div class="product-image"> <a href="product-page.html"> <img src="~/Content/Site/images/12.jpg" alt="Everypick"> </a>
+                              <div class="product-detail-inner">
+                                <div class="detail-inner-left align-center">
+                                  <ul>
+                                    <li class="pro-cart-icon">
+                                      <form>
+                                        <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                      </form>
+                                    </li>
+                                    <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                    <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                    <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="product-item-details">
+                              <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                              <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-6 mt-30 pro-padding">
+                          <div class="product-item">
+                            <div class="product-image"> <a href="product-page.html"> <img src="~/Content/Site/images/14.jpg" alt="Everypick"> </a>
+                              <div class="product-detail-inner">
+                                <div class="detail-inner-left align-center">
+                                  <ul>
+                                    <li class="pro-cart-icon">
+                                      <form>
+                                        <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                      </form>
+                                    </li>
+                                    <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                    <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                    <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="product-item-details">
+                              <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                              <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-6 mt-30 pro-padding">
+                          <div class="product-item">
+                            <div class="main-label new-label"><span>New</span></div>
+                              <div class="main-label sale-label"><span>Sale</span></div>
+                            <div class="product-image"> <a href="product-page.html"> <img src="~/Content/Site/images/15.jpg" alt="Everypick"> </a>
+                              <div class="product-detail-inner">
+                                <div class="detail-inner-left align-center">
+                                  <ul>
+                                    <li class="pro-cart-icon">
+                                      <form>
+                                        <button title="Add to Cart"><i class="fa fa-shopping-basket"></i></button>
+                                      </form>
+                                    </li>
+                                    <li class="pro-wishlist-icon"><a href="wishlist.html" title="Wishlist"><i class="fa fa-heart"></i></a></li>
+                                    <li class="pro-compare-icon"><a href="compare.html" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                    <li class="pro-quick-view-icon"><a class="popup-with-product" href="#product_popup" title="quick-view"><i class="fa fa-eye"></i></a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="product-item-details">
+                              <div class="product-item-name"> <a href="product-page.html">Defyant Reversible Dot Shorts</a> </div>
+                              <div class="price-box"> <span class="price">$80.00</span> <del class="price old-price">$120.00</del> </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,410 @@
+﻿@model MegaProject.Models.Store
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section Css {
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/Content/dist/css/bootstrap-select.css">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="~/Content/dist/js/bootstrap-select.js"></script>
+}
+<script>
+    // var App = angular.module("app", ["ng-file-model"]);
+    App.controller("StoreCtrl", function ($scope, $http, RequestService, Upload, $timeout) {
+        var protocol = location.protocol;
+        var slashes = protocol.concat("//");
+        var host = (window.location.port.length > 0) ? slashes.concat(window.location.hostname + ':' + window.location.port) : slashes.concat(window.location.hostname);
+        $scope.ServerPath = host;
+
+        $scope.UploadFiles = function (files) {
+            console.log(files);
+            $scope.SelectedFiles = files;
+            if ($scope.SelectedFiles && $scope.SelectedFiles.length) {
+                Upload.upload({
+                    url: '/Stores/Upload/',
+                    data: {
+                        files: $scope.SelectedFiles
+                    }
+                }).then(function (response) {
+                    $timeout(function () {
+                        $scope.Result = response.data;
+                    });
+                }, function (response) {
+                    if (response.status > 0) {
+                        var errorMsg = response.status + ': ' + response.data;
+                        alert(errorMsg);
+                    }
+                });
+            }
+        };
+
+
+            $scope.Grid = [];
+            $scope.StoreTypeList = [];
+            $scope.StoreList = [];
+            $scope.submittedFile = {};
+            $scope.obj = {};
+            $scope.StoreTypeObj = {
+                StoreId: 0, StoreTypes: "",  StoreName: "", StoreOwnerName: "", StoreNumber: "",
+                StoreOwnerNumber: "", StoreAddress: "",
+                Status: false
+            };
+
+            var list = [];
+
+            function JsonCall(Controller, Action) {
+                $.ajax({
+                    type: "POST",
+                    traditional: true,
+                    async: false,
+                    cache: false,
+                    url: '/' + Controller + '/' + Action,
+                    context: document.body,
+                    success: function (json) {
+                        list= json;
+                    }
+               ,
+                    error: function (xhr) {
+                        //debugger;
+                    }
+                });
+            }
+            function JsonCallParam(Controller, Action, Parameters) {
+                $.ajax({
+                    type: "POST",
+                    traditional: true,
+                    async: false,
+                    cache: false,
+                    url: '/' + Controller + '/' + Action,
+                    context: document.body,
+                    data:Parameters,
+                    success: function (json) {
+                        list = json;
+                    }
+               ,
+                    error: function (xhr) {
+                        //debugger;
+                    }
+                });
+            }
+            function WebApiCall(Type, Action, Parameters) {
+
+                $.ajax({
+                    type: Type,
+                    traditional: true,
+                    async: false,
+                    cache: false,
+                    url: '/api/' + Action,
+                    context: document.body,
+                    data: Parameters,
+                    ContentType: 'application/json;utf-8',
+                    success: function (json) {
+                        list = json;
+                    }
+               ,
+                    error: function (xhr) {
+                        //debugger;
+                    }
+                });
+            }
+            function SaveProductImage(formData, StoreId) {
+                var res = '';
+                $http.post('/Store/StoreImage', formData, {
+                    withCredentials: true,                      //Save ProductImage
+                    headers: { 'Content-Type': undefined },
+                    transformRequest: angular.identity
+                })
+                    .then(
+                    function (d) {
+                        res = d.data.filename;
+                        var ret = RequestService.JsonCallParam('Store', 'AssignImagetoStore', { 'StoreId': StoreId, 'imageName': res });
+
+                    },
+                    function (e) {
+                    }
+                );
+            }
+
+
+            $scope.GetStore = function () {
+                JsonCall("Store", "GetStore");
+                $scope.StoreList = list;
+
+            }
+            $scope.GetStore();
+
+
+            $scope.GetStoreType = function () {
+                JsonCall("StoreType", "GetStoreType");
+                $scope.StoreTypeList = list;
+
+            }
+            $scope.GetStoreType();
+
+            $scope.Save = function (obj) {
+               // var ret = RequestService.JsonCallParam('Store', 'Insert', { 'Store': JSON.stringify($scope.StoreTypeObj) });
+
+                //alert(JSON.stringify(obj.StoreLogo.name));
+              //  console.log(obj);
+                //$scope.StoreTypeObj.StoreLogo = obj.StoreLogo.name;
+                //alert(JSON.stringify($scope.StoreTypeObj.StoreLogo));
+                var pram = {
+                    'Store': JSON.stringify($scope.StoreTypeObj)
+
+                };
+                if ($scope.StoreTypeObj.StoreId == 0) {
+                    console.log($scope.StoreTypeObj);
+                  //  JsonCallParam("Store", "Insert", pram);
+                  //  var ret1 = RequestService.JsonCallParam('Stores', 'Insert', { 'Store': JSON.stringify($scope.StoreTypeObj) });
+                  /*  if (!ret1.status && ret1 != '') {
+                        $scope.StoreTypeObj.StoreId = ret1;
+
+                        if ($scope.StoreTypeObj.StoreLogo != '') {
+                            var formData_pic1 = new FormData();
+                            formData_pic1.append('file', $scope.StoreTypeObj.StoreLogo);
+                            SaveProductImage(formData_pic1, $scope.StoreTypeObj.StoreId);
+                        }
+
+                    }*/
+
+                }
+                else {
+
+
+                    JsonCallParam("StoreType", "Update_sales", pram);
+                }
+
+                $scope.GetStore();
+                $scope.clear();
+            };
+
+            $scope.LoadData = function (obj) {
+
+                JsonCallParam("Store", "Get_Data", { "StoreId": obj.StoreId });
+                $scope.StoreTypeObj = list;
+                alert($scope.StoreTypeObj.StoreTypes);
+
+
+
+            };
+            $scope.clear = function () {
+                $scope.StoreTypeObj = {
+                    StoreId: 0, StoreTypes: "", StoreName: "", StoreOwnerName: "", StoreNumber: "",
+                    StoreOwnerNumber: "", StoreAddress: "",
+                    Status: false
+                };
+
+            };
+
+        });
+</script>
+
+
+
+<div id="content_wrapper" class="simple" ng-controller="StoreCtrl">
+    <div id="header_wrapper" class="header-sm">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <header id="header">
+                     
+                        <ol class="breadcrumb">
+                            <li><a href="index.html">Stores</a></li>
+                          
+                            <li class="active">Add New Store</li>
+                        </ol>
+                    </header>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content" class="container-fluid">
+        <div class="content-body">
+            <div class="row">
+
+                <div class="col-lg-12 col-sm-4">
+                    <div class="card">
+                        <header class="card-heading ">
+                            <h2 class="card-title">Add New Store</h2>
+
+                        </header>
+                       
+
+                        <div class="card-body">
+                            <div class="form-group label-floating is-empty">
+                                <div class="input-group">
+                                    <select class="selectpicker" title="Select category" data-live-search="true" data-size="5">
+                                        <option data-subtext="Heinz">Ketchup</option>
+                                        <option data-subtext="Heinz">waled</option>
+                                        <option data-subtext="Heinz">usama</option>
+                                        <option data-subtext="Heinz">Ketchup</option>
+                                        <option data-subtext="Heinz">hamza</option>
+                                        <option data-subtext="check">Ketchup</option>
+                                        <option data-subtext="Heinz">Ketchup</option>
+                                        <option data-subtext="Heinz">Ketchup</option>
+                                    </select>
+                                </div>
+                            </div>
+                         
+                            <div class="form-group label-floating is-empty">
+                                <div class="input-group">
+                                    <span class="input-group-addon"></i></span>
+                                    <label class="control-label">Store Name</label>
+                                    <input type="text" name="StoreName" ng-model="StoreTypeObj.StoreName" class="form-control" required>
+                                    <span style="color:red" ng-show="form.StoreName.$invalid &&form.StoreName.$dirty">
+                                        <span ng-show="form.StoreName.$error.required">Enter Store Name</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group label-floating is-empty">
+                                <div class="input-group">
+                                    <span class="input-group-addon"></i></span>
+                                    <label class="control-label">Store Owner Name</label>
+                                    <input type="text"  class="form-control">
+                                    <span style="color:red" ng-show="form.StoreOwnerName.$invalid &&form.StoreOwnerName.$dirty">
+                                        <span ng-show="form.StoreOwnerName.$error.required">Enter Store Owner Name</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group label-floating is-empty">
+                                <div class="input-group">
+                                    <span class="input-group-addon"></i></span>
+                                    <label class="control-label">Store Number</label>
+                                    <input type="text" name="StoreNumber" ng-model="StoreTypeObj.StoreNumber" class="form-control">
+                                    <span style="color:red" ng-show="form.StoreNumber.$invalid &&form.StoreNumber.$dirty">
+                                        <span ng-show="form.StoreNumber.$error.required">Enter Store Owner Name</span>
+                                    </span>
+                                  </div>
+                            </div>
+                            <div class="form-group label-floating is-empty">
+                                <div class="input-group">
+                                    <span class="input-group-addon"></i></span>
+                                    <label class="control-label">StoreOwnerNumber</label>
+                                    <input type="text" name="StoreOwnerNumber" ng-model="StoreTypeObj.StoreOwnerNumber" class="form-control">
+                                    <span style="color:red" ng-show="form.StoreOwnerNumber.$invalid &&form.StoreOwnerNumber.$dirty">
+                                        <span ng-show="form.StoreOwnerNumber.$error.required">Enter Store Owner Name</span>
+                                    </span>
+                                </div>
+                            </div>
+                            @*<div class="form-group is-empty">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                                    <input type="text" class="form-control datepicker" id="md_input_date" type="date" placeholder="Date Picker">
+                                </div>
+                            </div>*@
+                            <div class="form-group label-floating is-empty">
+                                <div class="input-group">
+                                    <span class="input-group-addon"></i></span>
+                                    <label class="control-label">Store Address</label>
+                                    <textarea rows="3" id="textarea" name="StoreAddress" ng-model="StoreTypeObj.StoreAddress" class="form-control"></textarea>
+                                    <span style="color:red" ng-show="form.StoreAddress.$invalid &&form.StoreAddress.$dirty">
+                                        <span ng-show="form.StoreAddress.$error.required">Enter Store Owner Name</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                           
+                            <button name="Save" id="Save" class="btn btn-info" ng-click="Save(StoreTypeObj)">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+  
+    }
+
+
+@*<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Store</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.StoreName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StoreName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StoreName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StoreOwnerName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StoreOwnerName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StoreOwnerName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StoreNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StoreNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StoreNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StoreOwnerNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StoreOwnerNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StoreOwnerNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StoreDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StoreDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StoreDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StoreAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StoreAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StoreAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Status)
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
